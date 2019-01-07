@@ -171,25 +171,27 @@ paths:
           schema:
             $ref: '#/definitions/models.User'
   /user/login:
-    get:
+    post:
       tags:
       - user
-      description: Logs user into the system
+      description: login user into the system
       operationId: UserController.Login
       parameters:
-      - in: query
-        name: username
-        description: The username for login
+      - in: formData
+        name: email
+        description: email
         required: true
         type: string
-      - in: query
-        name: password
-        description: The password for login
+      - in: formData
+        name: token
+        description: password token
         required: true
         type: string
       responses:
         "200":
-          description: '{string} login success'
+          description: ""
+          schema:
+            $ref: '#/definitions/models.ApiResult'
         "403":
           description: user not exist
   /user/logout:
@@ -226,7 +228,7 @@ paths:
         "403":
           description: body is empty
 definitions:
-  163.0xc0001ecd80.false:
+  163.0xc000262690.false:
     title: "false"
     type: object
   models.ApiResult:
@@ -234,7 +236,7 @@ definitions:
     type: object
     properties:
       data:
-        $ref: '#/definitions/163.0xc0001ecd80.false'
+        $ref: '#/definitions/163.0xc000262690.false'
         description: data
       msg:
         description: error msg

@@ -8,7 +8,7 @@ import (
 
 type User struct {
 	Id         int       `orm:"auto;column(id)" json:"id" description:"index"`
-	Email      string    `orm:"size(100);column(email)" json:"email" description:"email"`
+	Email      string    `orm:"unique;size(100);column(email)" json:"email" description:"email"`
 	Token      string    `orm:"size(100);column(token)" json:"token" description:"token"`
 	CreateTime time.Time `orm:"type(datetime);column(createTime)" json:"createTime" description:"createTime"`
 }
@@ -33,4 +33,17 @@ func AddUser(user *User) error {
 
 	_ = id
 	return nil
+}
+
+func QueryUser(email string) (*User, error) {
+	o := orm.NewOrm()
+	var user User
+
+	err := o.QueryTable("user_tb").Filter("email", email).One(&user)
+	if err != nil {
+		beego.Error(err)
+		return nil, err
+	}
+
+	return &user, nil
 }

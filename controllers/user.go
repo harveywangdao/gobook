@@ -1,8 +1,13 @@
 package controllers
 
 import (
-	"github.com/astaxie/beego"
 	"gobook/models"
+
+	"github.com/astaxie/beego"
+)
+
+const (
+	UserLoginSession = "UserLoginSession"
 )
 
 type UserController struct {
@@ -34,6 +39,50 @@ func (u *UserController) Register() {
 		u.ServeJSON()
 		return
 	}
+
+	ret.Status = true
+	u.Data["json"] = ret
+	u.ServeJSON()
+}
+
+// @Title Login
+// @Description login user into the system
+// @Param	email	formData	string	true	"email"
+// @Param	token	formData	string	true	"password token"
+// @Success 200 {object} models.ApiResult
+// @Failure 403 user not exist
+// @router /login [post]
+func (u *UserController) Login() {
+	var ret models.ApiResult
+	ret.Status = false
+
+	email := u.GetString("email")
+	token := u.GetString("token")
+
+	user, err := models.QueryUser(email)
+	if err != nil {
+		ret.Msg = "user not existed"
+		u.Data["json"] = ret
+		u.ServeJSON()
+		return
+	}
+
+	loginSession := u.GetSession(UserLoginSession)
+	if loginSession != nil {
+		ret.Msg = "user already logined"
+		u.Data["json"] = ret
+		u.ServeJSON()
+		return
+	}
+
+	if user.Token != token {
+		ret.Msg = "password error"
+		u.Data["json"] = ret
+		u.ServeJSON()
+		return
+	}
+
+	u.SetSession(UserLoginSession, user.Id)
 
 	ret.Status = true
 	u.Data["json"] = ret
@@ -80,18 +129,6 @@ func (u *UserController) Put() {
 // @router /:uid [delete]
 func (u *UserController) Delete() {
 	u.Data["json"] = "delete success!"
-	u.ServeJSON()
-}
-
-// @Title Login
-// @Description Logs user into the system
-// @Param	username		query 	string	true		"The username for login"
-// @Param	password		query 	string	true		"The password for login"
-// @Success 200 {string} login success
-// @Failure 403 user not exist
-// @router /login [get]
-func (u *UserController) Login() {
-	u.Data["json"] = "user not exist"
 	u.ServeJSON()
 }
 

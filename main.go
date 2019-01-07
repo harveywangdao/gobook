@@ -29,7 +29,7 @@ func main() {
 	orm.Debug = true
 
 	beego.BConfig.WebConfig.Session.SessionOn = true
-	beego.BConfig.WebConfig.Session.SessionGCMaxLifetime = 2 * 60 * 60
+	beego.BConfig.WebConfig.Session.SessionGCMaxLifetime = 60 * 30
 	beego.BConfig.WebConfig.Session.SessionName = "gobooksessionID"
 
 	if beego.BConfig.RunMode == "dev" {
