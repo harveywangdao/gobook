@@ -137,7 +137,7 @@ func (u *ArticleController) QueryArticle() {
 	ret.Status = false
 
 	articleIdStr := u.Ctx.Input.Param(":articleId")
-	articleId, err := strconv.ParseInt(articleIdStr, 10, 0)
+	articleId, err := strconv.ParseInt(articleIdStr, 10, 64)
 	if err != nil {
 		ret.Msg = "articleId param error"
 		u.Data["json"] = ret
