@@ -15,6 +15,118 @@
     },
     "basePath": "/v1",
     "paths": {
+        "/article/addArticle": {
+            "post": {
+                "tags": [
+                    "article"
+                ],
+                "description": "add article",
+                "operationId": "ArticleController.AddArticle",
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "title",
+                        "description": "title",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "text",
+                        "description": "text",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "tags",
+                        "description": "tags",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.ApiResult"
+                        }
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/article/queryAllArticles": {
+            "get": {
+                "tags": [
+                    "article"
+                ],
+                "description": "query all articles",
+                "operationId": "ArticleController.QueryAllArticles",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.ArticlesResult"
+                        }
+                    },
+                    "403": {
+                        "description": "no data"
+                    }
+                }
+            }
+        },
+        "/article/queryOneArticle/{articleId}": {
+            "get": {
+                "tags": [
+                    "article"
+                ],
+                "description": "query one article",
+                "operationId": "ArticleController.QueryArticle",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "articleId",
+                        "description": "articleId",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.ArticleResult"
+                        }
+                    },
+                    "403": {
+                        "description": "no data"
+                    }
+                }
+            }
+        },
+        "/article/queryUserArticles": {
+            "get": {
+                "tags": [
+                    "article"
+                ],
+                "description": "query user articles",
+                "operationId": "ArticleController.QueryUserArticles",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.ArticlesResult"
+                        }
+                    },
+                    "403": {
+                        "description": "no data"
+                    }
+                }
+            }
+        },
         "/object/": {
             "get": {
                 "tags": [
@@ -150,23 +262,6 @@
                 }
             }
         },
-        "/user/getAllUsers": {
-            "get": {
-                "tags": [
-                    "user"
-                ],
-                "description": "get all Users",
-                "operationId": "UserController.GetAll",
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/models.User"
-                        }
-                    }
-                }
-            }
-        },
         "/user/login": {
             "post": {
                 "tags": [
@@ -204,15 +299,21 @@
             }
         },
         "/user/logout": {
-            "get": {
+            "post": {
                 "tags": [
                     "user"
                 ],
-                "description": "Logs out current logged in user session",
+                "description": "user logout",
                 "operationId": "UserController.logout",
                 "responses": {
                     "200": {
-                        "description": "{string} logout success"
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.ApiResult"
+                        }
+                    },
+                    "403": {
+                        "description": "user not exist"
                     }
                 }
             }
@@ -252,99 +353,10 @@
                     }
                 }
             }
-        },
-        "/user/{uid}": {
-            "get": {
-                "tags": [
-                    "user"
-                ],
-                "description": "get user by uid",
-                "operationId": "UserController.Get",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "uid",
-                        "description": "The key for staticblock",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/models.User"
-                        }
-                    },
-                    "403": {
-                        "description": ":uid is empty"
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "user"
-                ],
-                "description": "update the user",
-                "operationId": "UserController.Update",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "uid",
-                        "description": "The uid you want to update",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "body for user content",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.User"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/models.User"
-                        }
-                    },
-                    "403": {
-                        "description": ":uid is not int"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "user"
-                ],
-                "description": "delete the user",
-                "operationId": "UserController.Delete",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "uid",
-                        "description": "The uid you want to delete",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "{string} delete success!"
-                    },
-                    "403": {
-                        "description": "uid is empty"
-                    }
-                }
-            }
         }
     },
     "definitions": {
-        "163.0xc000262690.false": {
+        "163.0xc0002b8e40.false": {
             "title": "false",
             "type": "object"
         },
@@ -353,8 +365,80 @@
             "type": "object",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/163.0xc000262690.false",
+                    "$ref": "#/definitions/163.0xc0002b8e40.false",
                     "description": "data"
+                },
+                "msg": {
+                    "description": "error msg",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "status",
+                    "type": "boolean"
+                }
+            }
+        },
+        "models.Article": {
+            "title": "Article",
+            "type": "object",
+            "properties": {
+                "createTime": {
+                    "description": "createTime",
+                    "type": "string",
+                    "format": "datetime"
+                },
+                "id": {
+                    "description": "index",
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "tags": {
+                    "description": "tags",
+                    "type": "string"
+                },
+                "text": {
+                    "description": "text",
+                    "type": "string"
+                },
+                "title": {
+                    "description": "title",
+                    "type": "string"
+                },
+                "userId": {
+                    "description": "userId",
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
+        "models.ArticleResult": {
+            "title": "ArticleResult",
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/models.Article",
+                    "description": "data"
+                },
+                "msg": {
+                    "description": "error msg",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "status",
+                    "type": "boolean"
+                }
+            }
+        },
+        "models.ArticlesResult": {
+            "title": "ArticlesResult",
+            "type": "object",
+            "properties": {
+                "data": {
+                    "description": "data",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Article"
+                    }
                 },
                 "msg": {
                     "description": "error msg",
@@ -379,30 +463,6 @@
                 "Score": {
                     "type": "integer",
                     "format": "int64"
-                }
-            }
-        },
-        "models.User": {
-            "title": "User",
-            "type": "object",
-            "properties": {
-                "createTime": {
-                    "description": "createTime",
-                    "type": "string",
-                    "format": "datetime"
-                },
-                "email": {
-                    "description": "email",
-                    "type": "string"
-                },
-                "id": {
-                    "description": "index",
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "token": {
-                    "description": "token",
-                    "type": "string"
                 }
             }
         }

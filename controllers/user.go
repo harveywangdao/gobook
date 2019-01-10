@@ -89,54 +89,26 @@ func (u *UserController) Login() {
 	u.ServeJSON()
 }
 
-// @Title GetAll
-// @Description get all Users
-// @Success 200 {object} models.User
-// @router /getAllUsers [get]
-func (u *UserController) GetAll() {
-	u.Data["json"] = "users"
-	u.ServeJSON()
-}
-
-// @Title Get
-// @Description get user by uid
-// @Param	uid		path 	string	true		"The key for staticblock"
-// @Success 200 {object} models.User
-// @Failure 403 :uid is empty
-// @router /:uid [get]
-func (u *UserController) Get() {
-	u.Data["json"] = "user"
-	u.ServeJSON()
-}
-
-// @Title Update
-// @Description update the user
-// @Param	uid		path 	string	true		"The uid you want to update"
-// @Param	body		body 	models.User	true		"body for user content"
-// @Success 200 {object} models.User
-// @Failure 403 :uid is not int
-// @router /:uid [put]
-func (u *UserController) Put() {
-	u.Data["json"] = "uu"
-	u.ServeJSON()
-}
-
-// @Title Delete
-// @Description delete the user
-// @Param	uid		path 	string	true		"The uid you want to delete"
-// @Success 200 {string} delete success!
-// @Failure 403 uid is empty
-// @router /:uid [delete]
-func (u *UserController) Delete() {
-	u.Data["json"] = "delete success!"
-	u.ServeJSON()
-}
-
 // @Title logout
-// @Description Logs out current logged in user session
-// @Success 200 {string} logout success
-// @router /logout [get]
+// @Description user logout
+// @Success 200 {object} models.ApiResult
+// @Failure 403 user not exist
+// @router /logout [post]
 func (u *UserController) Logout() {
-	u.Data["json"] = "logout success"
+	var ret models.ApiResult
+	ret.Status = false
+
+	loginSession := u.GetSession(UserLoginSession)
+	if loginSession == nil {
+		ret.Msg = "user unlogin"
+		u.Data["json"] = ret
+		u.ServeJSON()
+		return
+	}
+
+	u.DelSession(UserLoginSession)
+
+	ret.Status = true
+	u.Data["json"] = ret
 	u.ServeJSON()
 }

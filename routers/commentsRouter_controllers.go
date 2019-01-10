@@ -7,6 +7,42 @@ import (
 
 func init() {
 
+    beego.GlobalControllerRouter["gobook/controllers:ArticleController"] = append(beego.GlobalControllerRouter["gobook/controllers:ArticleController"],
+        beego.ControllerComments{
+            Method: "AddArticle",
+            Router: `/addArticle`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["gobook/controllers:ArticleController"] = append(beego.GlobalControllerRouter["gobook/controllers:ArticleController"],
+        beego.ControllerComments{
+            Method: "QueryAllArticles",
+            Router: `/queryAllArticles`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["gobook/controllers:ArticleController"] = append(beego.GlobalControllerRouter["gobook/controllers:ArticleController"],
+        beego.ControllerComments{
+            Method: "QueryArticle",
+            Router: `/queryOneArticle/:articleId`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["gobook/controllers:ArticleController"] = append(beego.GlobalControllerRouter["gobook/controllers:ArticleController"],
+        beego.ControllerComments{
+            Method: "QueryUserArticles",
+            Router: `/queryUserArticles`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
     beego.GlobalControllerRouter["gobook/controllers:ObjectController"] = append(beego.GlobalControllerRouter["gobook/controllers:ObjectController"],
         beego.ControllerComments{
             Method: "Post",
@@ -54,42 +90,6 @@ func init() {
 
     beego.GlobalControllerRouter["gobook/controllers:UserController"] = append(beego.GlobalControllerRouter["gobook/controllers:UserController"],
         beego.ControllerComments{
-            Method: "Get",
-            Router: `/:uid`,
-            AllowHTTPMethods: []string{"get"},
-            MethodParams: param.Make(),
-            Filters: nil,
-            Params: nil})
-
-    beego.GlobalControllerRouter["gobook/controllers:UserController"] = append(beego.GlobalControllerRouter["gobook/controllers:UserController"],
-        beego.ControllerComments{
-            Method: "Put",
-            Router: `/:uid`,
-            AllowHTTPMethods: []string{"put"},
-            MethodParams: param.Make(),
-            Filters: nil,
-            Params: nil})
-
-    beego.GlobalControllerRouter["gobook/controllers:UserController"] = append(beego.GlobalControllerRouter["gobook/controllers:UserController"],
-        beego.ControllerComments{
-            Method: "Delete",
-            Router: `/:uid`,
-            AllowHTTPMethods: []string{"delete"},
-            MethodParams: param.Make(),
-            Filters: nil,
-            Params: nil})
-
-    beego.GlobalControllerRouter["gobook/controllers:UserController"] = append(beego.GlobalControllerRouter["gobook/controllers:UserController"],
-        beego.ControllerComments{
-            Method: "GetAll",
-            Router: `/getAllUsers`,
-            AllowHTTPMethods: []string{"get"},
-            MethodParams: param.Make(),
-            Filters: nil,
-            Params: nil})
-
-    beego.GlobalControllerRouter["gobook/controllers:UserController"] = append(beego.GlobalControllerRouter["gobook/controllers:UserController"],
-        beego.ControllerComments{
             Method: "Login",
             Router: `/login`,
             AllowHTTPMethods: []string{"post"},
@@ -101,7 +101,7 @@ func init() {
         beego.ControllerComments{
             Method: "Logout",
             Router: `/logout`,
-            AllowHTTPMethods: []string{"get"},
+            AllowHTTPMethods: []string{"post"},
             MethodParams: param.Make(),
             Filters: nil,
             Params: nil})

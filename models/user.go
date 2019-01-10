@@ -7,7 +7,7 @@ import (
 )
 
 type User struct {
-	Id         int       `orm:"auto;column(id)" json:"id" description:"index"`
+	Id         int64     `orm:"auto;column(id)" json:"id" description:"index"`
 	Email      string    `orm:"unique;size(100);column(email)" json:"email" description:"email"`
 	Token      string    `orm:"size(100);column(token)" json:"token" description:"token"`
 	CreateTime time.Time `orm:"type(datetime);column(createTime)" json:"createTime" description:"createTime"`
