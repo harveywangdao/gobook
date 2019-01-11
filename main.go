@@ -17,7 +17,7 @@ func init() {
 	dbMaxOpenConns, _ := beego.AppConfig.Int("dbMaxOpenConns")
 
 	orm.RegisterDriver("mysql", orm.DRMySQL)
-	dataSourceName := dbuser + ":" + dbpassword + "@tcp(" + dbip + ":" + dbport + ")/" + dbname + "?charset=utf8"
+	dataSourceName := dbuser + ":" + dbpassword + "@tcp(" + dbip + ":" + dbport + ")/" + dbname + "?charset=utf8&loc=Local"
 	orm.RegisterDataBase("default", "mysql", dataSourceName)
 	orm.SetMaxIdleConns("default", dbMaxIdleConns)
 	orm.SetMaxOpenConns("default", dbMaxOpenConns)
