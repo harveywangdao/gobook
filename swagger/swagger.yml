@@ -236,7 +236,7 @@ paths:
         "403":
           description: body is empty
 definitions:
-  163.0xc0003166f0.false:
+  163.0xc000304c90.false:
     title: "false"
     type: object
   models.ApiResult:
@@ -244,7 +244,7 @@ definitions:
     type: object
     properties:
       data:
-        $ref: '#/definitions/163.0xc0003166f0.false'
+        $ref: '#/definitions/163.0xc000304c90.false'
         description: data
       msg:
         description: error msg
