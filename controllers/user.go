@@ -112,3 +112,22 @@ func (u *UserController) Logout() {
 	u.Data["json"] = ret
 	u.ServeJSON()
 }
+
+// @Title isLogined
+// @Description query login status
+// @Success 200 {object} models.ApiResult
+// @Failure 403 user not exist
+// @router /isLogined [get]
+func (u *UserController) IsLogined() {
+	var ret models.ApiResult
+
+	loginSession := u.GetSession(UserLoginSession)
+	if loginSession == nil {
+		ret.Status = false
+	} else {
+		ret.Status = true
+	}
+
+	u.Data["json"] = ret
+	u.ServeJSON()
+}

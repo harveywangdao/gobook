@@ -262,6 +262,26 @@
                 }
             }
         },
+        "/user/isLogined": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "description": "query login status",
+                "operationId": "UserController.isLogined",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.ApiResult"
+                        }
+                    },
+                    "403": {
+                        "description": "user not exist"
+                    }
+                }
+            }
+        },
         "/user/login": {
             "post": {
                 "tags": [
@@ -356,7 +376,7 @@
         }
     },
     "definitions": {
-        "163.0xc000304c90.false": {
+        "163.0xc000336db0.false": {
             "title": "false",
             "type": "object"
         },
@@ -365,7 +385,7 @@
             "type": "object",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/163.0xc000304c90.false",
+                    "$ref": "#/definitions/163.0xc000336db0.false",
                     "description": "data"
                 },
                 "msg": {
